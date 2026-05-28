@@ -407,8 +407,15 @@ EOF
 
 install_cert() {
     section "二、申请 SSL 证书（acme.sh + GoDaddy）"
-    echo -e "${YELLOW}请确认已在 GoDaddy DNS 添加：A 记录  *  →  服务器公网 IP${PLAIN}"
-    read -rp "  已添加，继续？[y/N] " yn
+    echo -e "${YELLOW}请先登录 GoDaddy，在域名 DNS 管理页面添加以下记录：${PLAIN}"
+    echo ""
+    echo -e "  类型      名称        值"
+    echo -e "  ${GREEN}A${PLAIN}         ${GREEN}*${PLAIN}（星号）    ${GREEN}服务器公网 IP${PLAIN}"
+    echo ""
+    echo -e "${YELLOW}  ⚠ 注意：名称填 ${BOLD}*${PLAIN}${YELLOW}（星号，通配符），不是 @ 也不是域名本身${PLAIN}"
+    echo -e "${YELLOW}    这样 *.${DOMAIN} 下的所有子域名都会解析到你的服务器${PLAIN}"
+    echo ""
+    read -rp "  已添加 * 的 A 记录，继续？[y/N] " yn
     [[ "$yn" =~ ^[Yy]$ ]] || die "请先添加 GoDaddy 通配符 A 记录"
 
     info "验证 GoDaddy API..."
