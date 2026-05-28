@@ -105,7 +105,7 @@ install_chinadns() {
 
     # ★ 修复2：改用 curl，避免 wget -q --show-progress 卡住
     info "下载 chinadns-ng ${CHINADNS_VER}（curl）..."
-    curl -fL --progress-bar -o /tmp/chinadns-ng "$url" \
+    curl -g -fL --progress-bar --max-time 120 -o /tmp/chinadns-ng "$url" \
         || die "下载 chinadns-ng 失败\n║  请手动检查版本号或访问：\n║  https://github.com/zfl9/chinadns-ng/releases"
 
     chmod +x /tmp/chinadns-ng
